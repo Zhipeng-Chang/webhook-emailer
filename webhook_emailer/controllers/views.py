@@ -2,11 +2,18 @@ from django.shortcuts import render
 from django.template import loader
 import simplejson as json
 import smtplib
+import json
+import os
 from .models import Initiative
 from email.mime.text import MIMEText
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
+
+with open(os.path.join(os.path.dirname(__file__),"appsettings.json"), 'r') as EmailData:
+    emailData = json.load(EmailData)
+    gmail_user = emailData.get('Octave_Email', '')
+    gmail_password = emailData.get('Octave_Email_Password', '')
 
 def index(request):
     """
@@ -33,8 +40,11 @@ def gitlab_webhook_register(request):
         initiative_obj = Initiative(status = status, ticketId = ticketId, title = title, ownerName = ownerName, ownerEmail = ownerEmail, createdDate = createdDate, description = description, expectedTime = expectedTime )
         initiative_obj.save()
 
-        gmail_user = 'octava@edmonton.ca'  
-        gmail_password = '!'
+        with open(os.path.join(os.path.dirname(__file__),"appsettings.json"), 'r') as EmailData:
+            emailData = json.load(EmailData)
+            gmail_user = emailData.get('Octave_Email', '')
+            gmail_password = emailData.get('Octave_Email_Password', '')
+
         sent_from = gmail_user  
         to = [ownerEmail]
         msg = MIMEText((' Status: %r\n ID: %r\n Title: %r\n OwnerName: %r\n OwnerEmail: %r\n CreatedDate: %r\n Description: %r\n ExpectedTime: %r\n') % (status, ticketId, title, ownerName, ownerEmail, createdDate, description, expectedTime))
