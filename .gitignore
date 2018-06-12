@@ -4,8 +4,6 @@ __pycache__/
 *$py.class
 *.pyc 
 appsettings.json
-db.sqlite3
-
 # C extensions
 *.so
 
