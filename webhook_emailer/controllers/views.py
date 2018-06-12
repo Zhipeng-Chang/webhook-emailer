@@ -44,6 +44,7 @@ def gitlab_webhook_register(request):
         createdDate = json_data.get('CreatedDate', '')
         description = json_data.get('Description', '')
         expectedTime = json_data.get('ExpectedTime', '')
+        print ("status: ",status)
 
         initiative_obj = RequestValue(status = status, ticketId = ticketId, title = title, ownerName = ownerName, ownerEmail = ownerEmail, createdDate = createdDate, description = description, expectedTime = expectedTime )
         initiative_obj.save()
@@ -57,7 +58,7 @@ def gitlab_webhook_register(request):
         #Send email
         sent_from = gmail_user  
         to = [ownerEmail]
-        msg = MIMEText((' Status: %r\n ID: %r\n Title: %r\n OwnerName: %r\n OwnerEmail: %r\n CreatedDate: %r\n Description: %r\n ExpectedTime: %r\n') % (status, ticketId, title, ownerName, ownerEmail, createdDate, description, expectedTime))
+        msg = MIMEText((' Status: %s\n ID: %s\n Title: %s\n OwnerName: %s\n OwnerEmail: %s\n CreatedDate: %s\n Description: %s\n ExpectedTime: %s\n') % (status, ticketId, title, ownerName, ownerEmail, createdDate, description, expectedTime))
         msg['Subject'] = 'Your Initiative has been updated'
         msg['From'] = sent_from
         msg['To'] = ownerEmail
