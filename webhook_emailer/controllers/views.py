@@ -4,7 +4,7 @@ import simplejson as json
 import smtplib
 import json
 import os
-from .models import Initiative
+from .models import RequestValue
 from email.mime.text import MIMEText
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -23,11 +23,11 @@ def index(request):
     return render(request, 'index.html',context={})
 
 
+
 @csrf_exempt
 def gitlab_webhook_register(request):
     if request.method == 'POST' and request.body:
         json_data = json.loads(request.body)
-
         status = json_data.get('Status', '')
         ticketId = json_data.get('ID', '')
         title = json_data.get('Title', '')
@@ -37,14 +37,16 @@ def gitlab_webhook_register(request):
         description = json_data.get('Description', '')
         expectedTime = json_data.get('ExpectedTime', '')
 
-        initiative_obj = Initiative(status = status, ticketId = ticketId, title = title, ownerName = ownerName, ownerEmail = ownerEmail, createdDate = createdDate, description = description, expectedTime = expectedTime )
+        initiative_obj = RequestValue(status = status, ticketId = ticketId, title = title, ownerName = ownerName, ownerEmail = ownerEmail, createdDate = createdDate, description = description, expectedTime = expectedTime )
         initiative_obj.save()
-
+        
+        # Read the email password from different file 
         with open(os.path.join(os.path.dirname(__file__),"appsettings.json"), 'r') as EmailData:
             emailData = json.load(EmailData)
             gmail_user = emailData.get('Octave_Email', '')
             gmail_password = emailData.get('Octave_Email_Password', '')
 
+        #Send email
         sent_from = gmail_user  
         to = [ownerEmail]
         msg = MIMEText((' Status: %r\n ID: %r\n Title: %r\n OwnerName: %r\n OwnerEmail: %r\n CreatedDate: %r\n Description: %r\n ExpectedTime: %r\n') % (status, ticketId, title, ownerName, ownerEmail, createdDate, description, expectedTime))

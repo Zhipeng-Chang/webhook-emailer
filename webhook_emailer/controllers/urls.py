@@ -10,4 +10,5 @@ urlpatterns =[
 	path('', views.index, name='index'),
     path('webhook/url/', views.gitlab_webhook_register, name='gitlab-webhook-register')
 
+
 ]

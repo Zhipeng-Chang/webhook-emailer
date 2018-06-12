@@ -23,7 +23,7 @@ class NotificationTemplate(models.Model):
 class Webhook(models.Model):
 	Webhook_url = models.CharField(max_length=200)
 
-class Initiative(models.Model):
+class RequestValue(models.Model):
     
 	status = models.CharField(
 	    verbose_name = _(u'status'),
