@@ -12,7 +12,7 @@ else:
 
 # When create a new model, run migration as follow:
 # python manage.py makemigrations
-# python manage.py sqlmigrate polls myNewMigration	
+# python manage.py sqlmigrate controllers myNewMigration	
 # python manage.py migrate
 
 # Create your models here.
