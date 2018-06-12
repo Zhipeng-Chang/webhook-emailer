@@ -25,7 +25,7 @@ SECRET_KEY = '*&t7n%q00i40t!=bm8uxra6=m*g59c!(^)hy&$s8)h_&+lf0-0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '172.18.0.3','webhook','*']
+ALLOWED_HOSTS = ['127.0.0.1', '172.18.0.3','webhook','*', '0.0.0.0']
 
 
 # Application definition

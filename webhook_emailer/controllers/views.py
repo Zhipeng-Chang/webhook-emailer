@@ -26,6 +26,14 @@ def index(request):
 
 @csrf_exempt
 def gitlab_webhook_register(request):
+    status = None
+    ticketId = None
+    title = None
+    ownerName = None
+    ownerEmail = None
+    createdDate = None
+    description = None
+    expectedTime = None
     if request.method == 'POST' and request.body:
         json_data = json.loads(request.body)
         status = json_data.get('Status', '')
