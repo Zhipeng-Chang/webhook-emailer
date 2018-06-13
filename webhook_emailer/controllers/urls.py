@@ -8,7 +8,8 @@ admin.autodiscover()
 
 urlpatterns =[
 	path('', views.index, name='index'),
-    path('webhook/url/', views.gitlab_webhook_register, name='gitlab-webhook-register')
+    path('webhook/url/', views.webhook_register, name='webhook-register'),
+     path('database/', views.myview, name='database')
 
 
 ]
