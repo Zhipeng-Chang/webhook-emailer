@@ -22,6 +22,7 @@ def index(request):
     return render(request, 'index.html',context={})
 
 @csrf_exempt
+
 def webhook_register(request):
     if request.method == 'POST' and request.body:
         initiative_data = json.loads(request.body)

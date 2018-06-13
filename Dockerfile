@@ -1,8 +1,8 @@
 FROM python:3.6-stretch
 
 WORKDIR /app
+ADD webhook_emailer ./
 RUN pip install django
 RUN pip install simplejson
-ADD webhook_emailer ./
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:9001"]
+CMD ["python", "manage.py", "runserver"]

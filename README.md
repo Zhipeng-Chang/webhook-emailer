@@ -1,2 +1,5 @@
 # webhook-emailer
-Send email from Webhooks
+
+City of Edmonton Service Management Portal
+
+Webhook-emailer is built on top of Django.
