@@ -93,7 +93,7 @@ def webhook_register(request):
         """.format(StatusTypeImage=statusTypeImage, OwnerName=ownerName, ExpectedTime=expectedTime, ID=ticketId, CreatedDate=createdDate, Status = status, Description=description )
         
         # Record the MIME types of both parts - text/plain and text/html.
-        body = MIMEText(html, 'html')
+        body = MIMEText(html, 'html') 
         
         # Attach parts into message container.
         # According to RFC 2046, the last part of a multipart message, in this case
