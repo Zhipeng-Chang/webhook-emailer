@@ -32,7 +32,7 @@ def myview(request):
     return render(request,"", {"rows" : rows})
 
 @csrf_exempt
-<<<<<<< HEAD
+
 def webhook_register(request):
     # Local variables 
     status = None
@@ -43,10 +43,6 @@ def webhook_register(request):
     createdDate = None
     description = None
     expectedTime = None
-
-=======
-def gitlab_webhook_register(request):
->>>>>>> parent of cb4b6b2... update Docker file
     if request.method == 'POST' and request.body:
         initiative_data = json.loads(request.body)
         status = initiative_data.get('Status', '')
