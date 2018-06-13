@@ -5,11 +5,8 @@ from django.contrib import admin
 
 admin.autodiscover()
 
-
 urlpatterns =[
 	path('', views.index, name='index'),
-    path('webhook/url/', views.webhook_register, name='webhook-register'),
-     path('database/', views.myview, name='database')
-
+    path('webhook/url/', views.webhook_register, name='webhook-register')
 
 ]
