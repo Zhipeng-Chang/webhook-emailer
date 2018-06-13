@@ -20,6 +20,9 @@ class NotificationTemplate(models.Model):
 	NotificationTemplate_text = models.CharField(max_length=400)
 	Webhook_id = models.IntegerField(default=0)
 
+notificationTemplate_obj = NotificationTemplate(NotificationTemplate_text="Status: %s\n ID: %s\n Title: %s\n OwnerName: %s\n OwnerEmail: %s\n CreatedDate: %s\n Description: %s\n ExpectedTime: %s\n", Webhook_id =1)
+notificationTemplate_obj.save()
+
 class Webhook(models.Model):
 	Webhook_url = models.CharField(max_length=200)
 
