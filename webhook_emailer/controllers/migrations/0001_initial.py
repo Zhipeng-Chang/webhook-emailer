@@ -12,10 +12,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='StringTemplate',
+            name='NotificationTemplate',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('StringTemplate_text', models.CharField(max_length=400)),
+                ('NotificationTemplate_text', models.CharField(max_length=400)),
                 ('Webhook_id', models.IntegerField(default=0)),
             ],
         ),
@@ -24,6 +24,20 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('Webhook_url', models.CharField(max_length=200)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='RequestValue',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('status', models.CharField(help_text='Submit, Review, Collaborate, Deliver ', max_length=255, verbose_name='status')),
+                ('ticketId', models.IntegerField(default=-1, help_text=' ', verbose_name='ticketId')),
+                ('title', models.CharField(help_text=' ', max_length=255, verbose_name='title')),
+                ('ownerName', models.CharField(help_text=' ', max_length=255, verbose_name='ownerName')),
+                ('ownerEmail', models.CharField(help_text=' ', max_length=255, verbose_name='ownerEmail')),
+                ('createdDate', models.CharField(help_text=' ', max_length=255, verbose_name='createdDate')),
+                ('description', models.CharField(help_text=' ', max_length=255, verbose_name='description')),
+                ('expectedTime', models.CharField(help_text=' ', max_length=255, verbose_name='expectedTime')),
             ],
         ),
     ]
