@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.db import connections
 from django.db.utils import OperationalError
+from tinymce import models as tinymce_models
 db_conn = connections['default']
 try:
     c = db_conn.cursor()
@@ -11,17 +12,19 @@ else:
     connected = True
 
 # When create a new model, run migration as follow:
-# python manage.py makemigrations
-# python manage.py sqlmigrate controllers myNewMigration	
-# python manage.py migrate
+# python3 manage.py makemigrations
+# python3 manage.py sqlmigrate controllers myNewMigration	
+# python3 manage.py migrate
 
 # Create your models here.
 class NotificationTemplate(models.Model):
-	NotificationTemplate_text = models.CharField(max_length=400)
-	Webhook_id = models.IntegerField(default=0)
+	NotificationTemplate_text = tinymce_models.HTMLField()
+	Webhook_id = models.CharField(max_length=200)
+
 
 class Webhook(models.Model):
 	Webhook_url = models.CharField(max_length=200)
+
 
 class RequestValue(models.Model):
     
@@ -69,7 +72,7 @@ class RequestValue(models.Model):
 	    verbose_name = _(u'expectedTime'),
 	    help_text = _(u' '),
 	    max_length = 255
-	)
+	) 
 
 def __unicode__(self):
 	return u'%s %s' % (self.repo_name, self.object_kind)

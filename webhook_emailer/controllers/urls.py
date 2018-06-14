@@ -7,6 +7,6 @@ admin.autodiscover()
 
 urlpatterns =[
 	path('', views.index, name='index'),
-    path('webhook/url/', views.webhook_register, name='webhook-register')
+    path('webhook/url/', views.webhook_catch, name='webhook-catch')
 
 ]

@@ -18,13 +18,21 @@ def index(request):
     """
     View function for home page of site.
     """
+    conn = connections['default']
+    try:
+        cursor = conn.cursor()
+        cursor.execute("select NotificationTemplate_text from controllers_NotificationTemplate where Webhook_id == 1")
+        rows = cursor.fetchall()
+    finally:
+        conn.close()
+    print (rows)
     # Render the HTML template index.html with the data in the context variable
-    return render(request, 'index.html',context={})
+    return render(request, 'index.html',context={"test": rows})
 
 @csrf_exempt
 
-def webhook_register(request):
-    if request.method == 'POST' and request.body:
+def webhook_catch(request):
+    if request.method == 'POST' and request.body.isvalid():
         initiative_data = json.loads(request.body)
         status = initiative_data.get('Status', '')
         ticketId = initiative_data.get('ID', '')
