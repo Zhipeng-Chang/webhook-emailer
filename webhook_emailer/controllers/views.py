@@ -12,7 +12,7 @@ from django.http import HttpResponseRedirect
 from django.db import connections
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from . import formEmail
+from . import plugins
 
 def index(request):
     """

@@ -54,10 +54,19 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'webhook_emailer.urls'
 
 TINYMCE_DEFAULT_CONFIG = {
-    'theme': "simple", # default value
-    'relative_urls': True, # default value
+    'theme': "advanced", # default value
+    'relative_urls': False, # default value
     'width': '80%',
-    'height': 400
+    'height': 400,
+    'plugins': 'table,advimage,advlink,inlinepopups,preview,media,searchreplace,contextmenu,paste,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras',
+    'theme_advanced_buttons1': 'fullscreen,|,bold,italic,underline,strikethrough,|,sub,sup,|,bullist,numlist,|,outdent,indent,|,formatselect,removeformat',
+    'theme_advanced_buttons2': 'cut,copy,paste,pastetext,pasteword,|,search,replace,|,undo,redo,|,link,unlink,anchor,image,media,charmap,|,visualchars,nonbreaking',
+    'theme_advanced_buttons3': 'visualaid,tablecontrols,|,blockquote,del,ins,|,preview,code',
+    'theme_advanced_toolbar_location': 'top',
+    'theme_advanced_toolbar_align': 'left',
+    'content_css': '/media/css/tinymce.css',
+    'extended_valid_elements': 'noindex',
+    'custom_elements': 'noindex'
 }
 
 
@@ -128,3 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ADMIN_SITE_HEADER = "City of Edmonton Webhook Emailer"
+ADMIN_SITE_TITLE = "City of Edmonton Webhook Emailer"
+ADMIN_SITE_TITLE = "City of Edmonton Webhook Emailer"
