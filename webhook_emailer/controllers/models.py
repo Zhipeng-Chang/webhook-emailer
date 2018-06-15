@@ -3,6 +3,9 @@ from django.utils.translation import ugettext as _
 from django.db import connections
 from django.db.utils import OperationalError
 from tinymce import models as tinymce_models
+from django.core.validators import URLValidator
+
+field = models.TextField(validators=[URLValidator()])
 db_conn = connections['default']
 try:
     c = db_conn.cursor()
@@ -18,13 +21,15 @@ else:
 
 # Create your models here.
 class NotificationTemplate(models.Model):
-	NotificationTemplate_text = tinymce_models.HTMLField()
-	Webhook_id = models.CharField(max_length=200)
+	NotificationTemplateText = tinymce_models.HTMLField()
+	WebhookID =  models.AutoField(primary_key=True)
+	WebhookURL = models.URLField(null=False, blank=False, unique=True)
+	WebhookTitle = models.CharField(max_length=400)
 
-
-class Webhook(models.Model):
-	Webhook_url = models.CharField(max_length=200)
-
+class WebhookHistory(models.Model):
+	WebhookName = models.URLField(null=False, blank=False, unique=True)
+	WebhookID = models.IntegerField(unique=True)
+	WebhookStatus = models.CharField(max_length=400)
 
 class RequestValue(models.Model):
     
@@ -69,10 +74,9 @@ class RequestValue(models.Model):
 	)
     
 	expectedTime = models.CharField(
-	    verbose_name = _(u'expectedTime'),
+	    verbose_name = _(u'expectśdTime'),
 	    help_text = _(u' '),
 	    max_length = 255
 	) 
-
 def __unicode__(self):
 	return u'%s %s' % (self.repo_name, self.object_kind)
