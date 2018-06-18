@@ -39,9 +39,13 @@ class NotificationTemplateAdmin (admin.ModelAdmin):
 admin.site.register(NotificationTemplate, NotificationTemplateAdmin)
 
 class RequestValueAdmin (admin.ModelAdmin):
-    list_display = ('createdDate','ticketId','ownerName', 'status', 'title')
+    list_display = ('title', 'status', 'createdDate','ticketId','ownerName')
+    readonly_fields = ('title', 'status', 'createdDate','ticketId','ownerName', 'ownerEmail',  'description', 'expectedTime')
     list_filter = ('status', 'title', 'ownerName', 'ownerEmail')
     search_fields = ('status', 'ticketId', 'title', 'ownerName', 'ownerEmail', 'createdDate', 'description')
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 admin.site.register(RequestValue, RequestValueAdmin)
 

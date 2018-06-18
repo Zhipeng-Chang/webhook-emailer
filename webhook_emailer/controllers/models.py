@@ -76,7 +76,7 @@ class RequestValue(models.Model):
     )
 
     expectedTime = models.CharField(
-        verbose_name = _(u'expectśdTime'),
+        verbose_name = _(u'expectedTime'),
         help_text = _(u' '),
         max_length = 255
     ) 
