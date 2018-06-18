@@ -22,8 +22,7 @@ else:
 # Create your models here.
 class NotificationTemplate(models.Model):
 	NotificationTemplateText = tinymce_models.HTMLField()
-	WebhookID =  models.AutoField(primary_key=True)
-	WebhookURL = models.URLField(null=False, blank=False, unique=True)
+	WebhookURL = models.URLField(null=False, blank=False)
 	WebhookTitle = models.CharField(max_length=400)
 
 class WebhookHistory(models.Model):

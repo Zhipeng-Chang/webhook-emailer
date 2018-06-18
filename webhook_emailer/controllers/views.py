@@ -32,7 +32,7 @@ def index(request):
 @csrf_exempt
 
 def webhook_catch(request):
-    if request.method == 'POST' and request.body.isvalid():
+    if request.method == 'POST' and request.body:
         initiative_data = json.loads(request.body)
         status = initiative_data.get('Status', '')
         ticketId = initiative_data.get('ID', '')
@@ -54,7 +54,7 @@ def webhook_catch(request):
             gmail_password = emailData.get('Octave_Email_Password', '')
 
         #Form the email body
-        email = formEmail.formAnEmail(gmail_user, ownerEmail, status, ticketId, title, ownerName, ownerEmail, createdDate, description, expectedTime)
+        email = plugins.formAnEmail(gmail_user, ownerEmail, status, ticketId, title, ownerName, ownerEmail, createdDate, description, expectedTime)
         
         # Log in to the email account
         try:  
