@@ -31,7 +31,7 @@ def index(request):
 
 @csrf_exempt
 
-def webhook_catch(request):
+def webhook_catch_octava(request):
     if request.method == 'POST' and request.body:
         initiative_data = json.loads(request.body)
         status = initiative_data.get('Status', '')
@@ -70,3 +70,4 @@ def webhook_catch(request):
 
     else:
         return HttpResponse('Successfully got the request, but the json pattern doesnt match')
+    

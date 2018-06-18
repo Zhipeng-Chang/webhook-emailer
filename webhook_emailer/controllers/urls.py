@@ -6,7 +6,6 @@ from django.conf import settings
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 admin.autodiscover()
 urlpatterns =[
-	path('', views.index, name='index'),
-    path('webhook/url/', views.webhook_catch, name='webhook-catch')
+    path('webhook/url/', views.webhook_catch_octava, name='webhook-catch')
 
 ]
