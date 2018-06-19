@@ -5,6 +5,8 @@ import os
 from django.shortcuts import render
 from django.template import loader
 from .models import RequestValue
+from .models import WebhookHistory
+
 from email.mime.text import MIMEText
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -14,26 +16,12 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from . import plugins
 
-def index(request):
-    """
-    View function for home page of site.
-    """
-    conn = connections['default']
-    try:
-        cursor = conn.cursor()
-        cursor.execute("select NotificationTemplate_text from controllers_NotificationTemplate where Webhook_id == 1")
-        rows = cursor.fetchall()
-    finally:
-        conn.close()
-    print (rows)
-    # Render the HTML template index.html with the data in the context variable
-    return render(request, 'index.html',context={"test": rows})
-
 @csrf_exempt
 
 def webhook_catch_octava(request):
     if request.method == 'POST' and request.body:
         initiative_data = json.loads(request.body)
+
         status = initiative_data.get('Status', '')
         ticketId = initiative_data.get('ID', '')
         title = initiative_data.get('Title', '')
@@ -63,9 +51,12 @@ def webhook_catch_octava(request):
             server.login(gmail_user, gmail_password)
             server.sendmail(gmail_user, ownerEmail, email)
             server.close()
+            webhookHistory_obj = WebhookHistory(WebhookName = status, DataOut = email, WebhookStatus = 'Success!')
+            webhookHistory_obj.save()
         except:  
+            webhookHistory_obj = WebhookHistory(WebhookName = status, DataOut = email, WebhookStatus = 'Failed! Unable to log in to the email account.')
+            webhookHistory_obj.save()
             raise EOFError ('Unable to log in to the email account')
-        
         return HttpResponse('Successfully got the request!')
 
     else:

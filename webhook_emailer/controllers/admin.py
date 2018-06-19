@@ -9,7 +9,6 @@ from tinymce import models as tinymce_models
 
 # Register your models here.
 
-admin.site.register(WebhookHistory)
 
 class LogEntryAdmin(admin.ModelAdmin):
     readonly_fields = ('content_type',
@@ -48,4 +47,12 @@ class RequestValueAdmin (admin.ModelAdmin):
         return False
 
 admin.site.register(RequestValue, RequestValueAdmin)
+
+
+class WebhookHistoryAdmin (admin.ModelAdmin):
+    list_display = ('WebhookName', 'DataOut', 'WebhookStatus')
+    list_filter = ('WebhookName', 'WebhookStatus')
+    search_fields = ('WebhookName','WebhookStatus')
+    readonly_fields= ('WebhookName', 'DataOut', 'WebhookStatus')
+admin.site.register(WebhookHistory, WebhookHistoryAdmin)
 

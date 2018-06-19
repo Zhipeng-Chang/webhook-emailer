@@ -29,8 +29,8 @@ class NotificationTemplate(models.Model):
     WebhookURL = models.UUIDField(default=uuid.uuid4, editable=False)
 
 class WebhookHistory(models.Model):
-    WebhookName = models.URLField(null=False, blank=False, unique=True)
-    WebhookID = models.IntegerField(unique=True)
+    WebhookName = models.URLField(null=False, blank=False)
+    DataOut = tinymce_models.HTMLField()
     WebhookStatus = models.CharField(max_length=400)
 
 class RequestValue(models.Model):
