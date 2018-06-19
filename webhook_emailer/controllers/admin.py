@@ -30,10 +30,32 @@ class LogEntryAdmin(admin.ModelAdmin):
         return actions
 
 class NotificationTemplateAdmin (admin.ModelAdmin):
+    #exclude = ('author',)
     list_display = ('WebhookTitle', 'RootURL', 'WebhookURL')
     list_filter = ('WebhookTitle', 'RootURL')
     search_fields = ('WebhookTitle', 'RootURL')
-    readonly_fields=('WebhookURL',)
+    readonly_fields=('WebhookURL','WebhookCreator')
+
+
+    def has_change_permission(self, request, obj=None):
+        has_class_permission = super(NotificationTemplateAdmin, self).has_change_permission(request, obj)
+        if not has_class_permission:
+            return False
+        if obj is not None and not request.user.is_superuser and request.user.id != obj.WebhookCreator.id:
+            return False
+        return True
+
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return NotificationTemplate.objects.all()
+        else:
+            queryset = super(NotificationTemplateAdmin, self).get_queryset(request)
+            return queryset.filter(WebhookCreator=request.user)
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.WebhookCreator = request.user
+        obj.save()
 
 admin.site.register(NotificationTemplate, NotificationTemplateAdmin)
 
@@ -52,7 +74,7 @@ admin.site.register(RequestValue, RequestValueAdmin)
 class WebhookHistoryAdmin (admin.ModelAdmin):
     list_display = ('WebhookName', 'DataOut', 'WebhookStatus')
     list_filter = ('WebhookName', 'WebhookStatus')
-    search_fields = ('WebhookName','WebhookStatus')
+    search_fields = ('WebhookName', 'DataOut', 'WebhookStatus')
     readonly_fields= ('WebhookName', 'DataOut', 'WebhookStatus')
 admin.site.register(WebhookHistory, WebhookHistoryAdmin)
 

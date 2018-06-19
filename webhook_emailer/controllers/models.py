@@ -5,6 +5,8 @@ from django.db.utils import OperationalError
 from tinymce import models as tinymce_models
 from django.core.validators import URLValidator
 import uuid
+from django.contrib.auth.models import User
+
 
 
 field = models.TextField(validators=[URLValidator()])
@@ -27,6 +29,7 @@ class NotificationTemplate(models.Model):
     NotificationTemplateText = tinymce_models.HTMLField()
     RootURL = models.URLField(null=False, blank=False)
     WebhookURL = models.UUIDField(default=uuid.uuid4, editable=False)
+    WebhookCreator = models.ForeignKey(User,related_name='entries', on_delete=models.PROTECT)
 
 class WebhookHistory(models.Model):
     WebhookName = models.URLField(null=False, blank=False)
