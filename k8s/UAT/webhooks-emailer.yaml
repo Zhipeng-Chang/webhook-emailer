@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         app: webhooks-emailer
-        technology: dotnetcore
+        technology: python
         tier: frontend
         product: utility
     spec:
@@ -42,6 +42,8 @@ spec:
           - name: db-service-account
             mountPath: /secrets/cloudsql
             readOnly: true
+      imagePullSecrets:
+      - name: acs-access
       volumes:
       - name: secret-volume
         secret:
