@@ -1,0 +1,51 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: webhooks-emailer
+  labels:
+    app: webhooks-emailer
+    technology: python
+    tier: frontend
+    product: utility
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhooks-emailer
+      technology: python
+      tier: frontend
+      product: utility
+  template:
+    metadata:
+      labels:
+        app: webhooks-emailer
+        technology: dotnetcore
+        tier: frontend
+        product: utility
+    spec:
+      containers:
+      - name: webhooks-emailer
+        image: coeoctava.azurecr.io/webhook-emailer:1.0.3386
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9001
+        volumeMounts:
+        - name: secret-volume
+          mountPath: "/etc/secrets"
+          readOnly: true
+      - name: db-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.11
+        command: ["/cloud_sql_proxy",
+            "-instances=octavia-189116:us-west1:octavadbuat=tcp:3306",
+            "-credential_file=/secrets/cloudsql/credentials.json"]
+        volumeMounts:
+          - name: db-service-account
+            mountPath: /secrets/cloudsql
+            readOnly: true
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: webbhooks-config
+      - name: db-service-account
+        secret:
+          secretName: octavadb-service-account
