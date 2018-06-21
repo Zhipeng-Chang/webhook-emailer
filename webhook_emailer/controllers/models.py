@@ -3,6 +3,13 @@ from django.utils.translation import ugettext as _
 from django.db import connections
 from django.db.utils import OperationalError
 from tinymce import models as tinymce_models
+from django.core.validators import URLValidator
+import uuid
+from django.contrib.auth.models import User
+
+
+
+field = models.TextField(validators=[URLValidator()])
 db_conn = connections['default']
 try:
     c = db_conn.cursor()
@@ -18,61 +25,63 @@ else:
 
 # Create your models here.
 class NotificationTemplate(models.Model):
-	NotificationTemplate_text = tinymce_models.HTMLField()
-	Webhook_id = models.CharField(max_length=200)
+    WebhookTitle = models.CharField(max_length=400)
+    NotificationTemplateText = tinymce_models.HTMLField()
+    RootURL = models.URLField(null=False, blank=False)
+    WebhookURL = models.UUIDField(default=uuid.uuid4, editable=False)
+    WebhookCreator = models.ForeignKey(User,related_name='entries', on_delete=models.PROTECT)
 
-
-class Webhook(models.Model):
-	Webhook_url = models.CharField(max_length=200)
-
+class WebhookHistory(models.Model):
+    WebhookName = models.URLField(null=False, blank=False)
+    DataOut = tinymce_models.HTMLField()
+    WebhookStatus = models.CharField(max_length=400)
 
 class RequestValue(models.Model):
     
-	status = models.CharField(
-	    verbose_name = _(u'status'),
-	    help_text = _(u'Submit, Review, Collaborate, Deliver '),
-	    max_length = 255
-	)
-	ticketId = models.IntegerField(
-	    verbose_name = _(u'ticketId'),
-	    help_text = _(u' '),
-	    default = -1
-	)
-	title = models.CharField(
-	    verbose_name = _(u'title'),
-	    help_text = _(u' '),
-	    max_length = 255
-	)
-    
-	ownerName = models.CharField(
-	    verbose_name = _(u'ownerName'),
-	    help_text = _(u' '),
-	    max_length = 255
-	)
-    
-	ownerEmail = models.CharField(
-	    verbose_name = _(u'ownerEmail'),
-	    help_text = _(u' '),
-	    max_length = 255
-	)
-	    
-	createdDate = models.CharField(
-	    verbose_name = _(u'createdDate'),
-	    help_text = _(u' '),
-	    max_length = 255
-	)
-    
-	description = models.CharField(
-	    verbose_name = _(u'description'),
-	    help_text = _(u' '),
-	    max_length = 255
-	)
-    
-	expectedTime = models.CharField(
-	    verbose_name = _(u'expectedTime'),
-	    help_text = _(u' '),
-	    max_length = 255
-	) 
+    status = models.CharField(
+        verbose_name = _(u'status'),
+        help_text = _(u'Submit, Review, Collaborate, Deliver '),
+        max_length = 255
+    )
+    ticketId = models.IntegerField(
+        verbose_name = _(u'ticketId'),
+        help_text = _(u' '),
+        default = -1
+    )
+    title = models.CharField(
+        verbose_name = _(u'title'),
+        help_text = _(u' '),
+        max_length = 255
+    )
 
+    ownerName = models.CharField(
+        verbose_name = _(u'ownerName'),
+        help_text = _(u' '),
+        max_length = 255
+    )
+
+    ownerEmail = models.CharField(
+        verbose_name = _(u'ownerEmail'),
+        help_text = _(u' '),
+        max_length = 255
+    )
+	
+    createdDate = models.CharField(
+        verbose_name = _(u'createdDate'),
+        help_text = _(u' '),
+        max_length = 255
+    )
+
+    description = models.CharField(
+        verbose_name = _(u'description'),
+        help_text = _(u' '),
+        max_length = 255
+    )
+
+    expectedTime = models.CharField(
+        verbose_name = _(u'expectedTime'),
+        help_text = _(u' '),
+        max_length = 255
+    ) 
 def __unicode__(self):
 	return u'%s %s' % (self.repo_name, self.object_kind)
