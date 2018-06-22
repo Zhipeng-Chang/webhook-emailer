@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '172.18.0.3','webhook','*', '0.0.0.0']
 # Application definition
 
 INSTALLED_APPS = [
-    'controllers',
+    'webhooks',
     'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
