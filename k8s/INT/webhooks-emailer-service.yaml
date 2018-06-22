@@ -1,0 +1,20 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhooks-emailer
+  namespace: int
+  labels:
+    app: webhooks-emailer
+    technology: python
+    tier: frontend
+    product: utility
+spec:
+  type: NodePort
+  ports:
+  - port: 9001
+  selector:
+    app: webhooks-emailer
+    technology: python
+    tier: frontend
+    product: utility
