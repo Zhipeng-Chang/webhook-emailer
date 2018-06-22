@@ -20,7 +20,7 @@ else:
 
 # When create a new model, run migration as follow:
 # python3 manage.py makemigrations
-# python3 manage.py sqlmigrate controllers myNewMigration	
+# python3 manage.py sqlmigrate webhooks myNewMigration	
 # python3 manage.py migrate
 
 # Create your models here.
@@ -35,53 +35,13 @@ class WebhookHistory(models.Model):
     WebhookName = models.URLField(null=False, blank=False)
     DataOut = tinymce_models.HTMLField()
     WebhookStatus = models.CharField(max_length=400)
+    WebhookCreator = models.CharField(max_length=400)
 
 class RequestValue(models.Model):
+    DataIn = tinymce_models.HTMLField()
+    DataIn_date = models.DateField(_(u"DataIn Date"), auto_now_add=True, blank=True)
+    DataIn_time = models.TimeField(_(u"DataIn Time"), auto_now_add=True, blank=True)
+
     
-    status = models.CharField(
-        verbose_name = _(u'status'),
-        help_text = _(u'Submit, Review, Collaborate, Deliver '),
-        max_length = 255
-    )
-    ticketId = models.IntegerField(
-        verbose_name = _(u'ticketId'),
-        help_text = _(u' '),
-        default = -1
-    )
-    title = models.CharField(
-        verbose_name = _(u'title'),
-        help_text = _(u' '),
-        max_length = 255
-    )
-
-    ownerName = models.CharField(
-        verbose_name = _(u'ownerName'),
-        help_text = _(u' '),
-        max_length = 255
-    )
-
-    ownerEmail = models.CharField(
-        verbose_name = _(u'ownerEmail'),
-        help_text = _(u' '),
-        max_length = 255
-    )
-	
-    createdDate = models.CharField(
-        verbose_name = _(u'createdDate'),
-        help_text = _(u' '),
-        max_length = 255
-    )
-
-    description = models.CharField(
-        verbose_name = _(u'description'),
-        help_text = _(u' '),
-        max_length = 255
-    )
-
-    expectedTime = models.CharField(
-        verbose_name = _(u'expectedTime'),
-        help_text = _(u' '),
-        max_length = 255
-    ) 
 def __unicode__(self):
 	return u'%s %s' % (self.repo_name, self.object_kind)

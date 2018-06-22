@@ -6,7 +6,7 @@ from django.conf import settings
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 admin.autodiscover()
 urlpatterns =[
-    path('', admin.site.urls, name='index'),
-    path('webhook/url/', views.webhook_catch_octava, name='webhook-catch')
+    path('', views.redrect_to_webhook_admin, name='redrect_to_webhook_admin'),
+    path('util/webhook/url/<uuid:requestUrl>/', views.webhook_catch_octava, name='webhook-catch')
 
 ]

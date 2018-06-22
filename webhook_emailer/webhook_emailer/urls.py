@@ -22,18 +22,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('util/webhook/', admin.site.urls),
     
 ]
 
 # Use include() to add paths from the catalog application 
 urlpatterns += [
-    path('controllers/', include('controllers.urls')),
+    path('', include('webhooks.urls')),
 ]
 
 #Add URL maps to redirect the base URL to our application
 urlpatterns += [
-    path('', RedirectView.as_view(url='/controllers/')),
+    path('', RedirectView.as_view(url='')),
 ]
 
 # Use static() to add url mapping to serve static files during development (only)
