@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ -f /etc/secrets/appsettings.json ]; then
-  cp /etc/secrets/appsettings.json /app/controllers/
+  cp /etc/secrets/appsettings.json /app/webhooks/
   echo "appsettings.json config specified."
 else
   echo "No appsettings.json config specified."
