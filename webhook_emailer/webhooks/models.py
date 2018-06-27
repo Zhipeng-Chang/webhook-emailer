@@ -42,6 +42,5 @@ class RequestValue(models.Model):
     DataIn_date = models.DateField(_(u"DataIn Date"), auto_now_add=True, blank=True)
     DataIn_time = models.TimeField(_(u"DataIn Time"), auto_now_add=True, blank=True)
 
-    
 def __unicode__(self):
 	return u'%s %s' % (self.repo_name, self.object_kind)
