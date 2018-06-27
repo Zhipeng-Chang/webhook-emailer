@@ -33,7 +33,7 @@ class NotificationTemplateAdmin (admin.ModelAdmin):
     list_display = ('WebhookTitle', 'RootURL', 'WebhookURL')
     list_filter = ('WebhookTitle', 'RootURL')
     search_fields = ('WebhookTitle', 'RootURL')
-    readonly_fields=('WebhookURL','WebhookCreator')
+    readonly_fields=('RootURL','WebhookURL','WebhookCreator')
 
 
     def has_change_permission(self, request, obj=None):
